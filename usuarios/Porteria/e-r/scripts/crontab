@@ -1,0 +1,17 @@
+# Verificación de seguridad diaria
+0 0 * * * /usr/bin/php /ruta/completa/a/scripts/security_check.php >> /ruta/completa/a/logs/security_check.log 2>&1
+
+# Backup diario de la base de datos
+0 1 * * * /usr/bin/mysqldump -u app_user -p'UnaContraseñaMuySegura123!' porteria > /ruta/completa/a/backups/porteria_$(date +\%Y\%m\%d).sql
+
+# Rotación de logs
+0 2 * * * /usr/bin/find /ruta/completa/a/logs -name "*.log" -mtime +30 -delete
+
+# Verificación de certificado SSL
+0 3 * * * /usr/bin/php /ruta/completa/a/scripts/check_ssl.php >> /ruta/completa/a/logs/ssl_check.log 2>&1
+
+# Limpieza de archivos temporales
+0 4 * * * /usr/bin/find /ruta/completa/a/temp -type f -mtime +7 -delete
+
+# Verificación de integridad de archivos
+0 5 * * * /usr/bin/php /ruta/completa/a/scripts/file_integrity_check.php >> /ruta/completa/a/logs/integrity_check.log 2>&1 
